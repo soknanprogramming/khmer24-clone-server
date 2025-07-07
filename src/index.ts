@@ -1,41 +1,24 @@
-import 'dotenv/config';
-import { drizzle } from 'drizzle-orm/mysql2';
-import { eq } from 'drizzle-orm';
-// import { usersTable } from './db/genderTable';
-  
-const db = drizzle(process.env.DATABASE_URL!);
+import 'dotenv/config'
+import express from 'express'
+import path from 'path';
 
-async function main() {
-//   const user: typeof usersTable.$inferInsert = {
-//     name: 'John',
-//     age: 30,
-//     email: 'john@example.com',
-//   };
+import productCategoryRouter from './routes/productCategoryRoute'
 
-//   await db.insert(usersTable).values(user);
-//   console.log('New user created!')
+const app = express()
 
-//   const users = await db.select().from(usersTable);
-//   console.log('Getting all users from the database: ', users)
-  /*
-  const users: {
-    id: number;
-    name: string;
-    age: number;
-    email: string;
-  }[]
-  */
+app.get('/', (req, res) => {
+  res.send('Hello Tony :)')
+})
 
-//   await db
-//     .update(usersTable)
-//     .set({
-//       age: 31,
-//     })
-//     .where(eq(usersTable.email, user.email));
-//   console.log('User info updated!')
 
-//   await db.delete(usersTable).where(eq(usersTable.email, user.email));
-//   console.log('User deleted!')
-}
+// Make the imageupload folder publicly accessible
+// const test = path.join(process.cwd(), 'uploads')
+// Make uploads folder accessible for serving static files
+// Change this line
+app.use('/uploads', express.static(path.join('src', 'uploads')))
 
-main();
+app.use("/api/productCategory", productCategoryRouter)
+
+app.listen(process.env.PORT, () => {
+  console.log(`Server is running http://localhost:${process.env.PORT}`)
+})
