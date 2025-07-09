@@ -8,6 +8,8 @@ import "dotenv/config";
 
 const db = drizzle(process.env.DATABASE_URL!);
 
+// passport.serializeUser and passport.deserializeUser are correct
+
 passport.serializeUser((user: any , done) => {
   done(null, user.ID);
 })
@@ -18,15 +20,16 @@ passport.deserializeUser(async (id: number, done) => {
       .select()
       .from(usersTable)
       .where(eq(usersTable.ID, id))
-    done(null, findUser) // findUser is an array of objects, so we need to find the object with the ID that matches the id that we passed int
+    done(null, findUser[0])
   } catch (err) {
     done(err, null)
   }
 })
 
+
 export default passport.use(
   new Strategy({
-    usernameField: "phoneNumber", // 👈 Tell Passport to use phoneNumber
+    usernameField: "phoneNumber",
     passwordField: "password",
   },
     async (phoneNumber, password, done) => {
@@ -38,11 +41,25 @@ export default passport.use(
                   eq(usersTable.PhoneNumber2, phoneNumber),
                   eq(usersTable.PhoneNumber3, phoneNumber),
                   ))
-        if(!findUser) throw new Error("User not found")
-        if(findUser[0].Password !== password) throw new Error("Password is incorrect")
-        done(null, findUser)
+
+      // ✅ Correctly check if the user array is empty
+      if (findUser.length === 0) {
+        // Use the 'done' callback to signal failure without crashing
+        return done(null, false, { message: "User not found" });
+      }
+
+      // ✅ Check the password
+      if (findUser[0].Password !== password) {
+        // Use the 'done' callback for incorrect password
+        return done(null, false, { message: "Password is incorrect" });
+      }
+      
+      // ✅ If successful, pass the user object
+      return done(null, findUser[0]);
+
     } catch (err) {
-      done(err, false)
+      // For actual database or server errors
+      return done(err);
     }
-  }) 
-)
+  })
+);
