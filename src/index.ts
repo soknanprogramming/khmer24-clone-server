@@ -12,7 +12,10 @@ import "./auth/local-strategy";
 
 const app = express()
 
-app.use(cors())
+app.use(cors({
+  origin: "http://localhost:5173", // 👈 your frontend URL
+  credentials: true,              // 👈 allow cookies/sessions
+}));
 app.use(express.json())
 app.use(cookieParser("helloworld"));
 app.use(

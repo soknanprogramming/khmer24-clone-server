@@ -10,18 +10,25 @@ const router = Router();
 router.post(
   "/",
   passport.authenticate("local"),
-  (req: any, res: Response) => {
+  (req: AuthRequest, res: any) => {
     // On success, send back user data but exclude the password
-    const { Password, ...userData } = req.user;
-    res.status(200).json(userData);
+    const UserName = req.user.UserName;
+    const FirstName = req.user.FirstName;
+    const LastName = req.user.LastName;
+    
+    const ID = req.user.ID;
+    res.status(200).json({userName : UserName, firstName: FirstName, lastName: LastName});
   }
 );
 
 router.get("/status", (req: AuthRequest, res: any) => {
     if (req.isAuthenticated() && req.user) {
         // Corrected: Use .status().json() or .status().send()
-        const { Password, ...userData } = req.user;
-        return res.status(200).json(userData);
+        const UserName = req.user.UserName;
+        const ID = req.user.ID;
+        const FirstName = req.user.FirstName;
+        const LastName = req.user.LastName;
+        return res.status(200).json({userName : UserName, firstName: FirstName, lastName: LastName});
     }
     return res.sendStatus(401);
 });
