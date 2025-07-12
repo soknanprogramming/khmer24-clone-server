@@ -6,6 +6,7 @@ import { productCategoryTable } from "../db/productCategoryTable";
 import { productSubCategoryTable } from "../db/productSubCategoryTable";
 import { brandTable } from "../db/brandTable";
 
+
 const db = drizzle(process.env.DATABASE_URL!);
 
 export const productCategoryHandler = async (req: Request, res: Response) => {

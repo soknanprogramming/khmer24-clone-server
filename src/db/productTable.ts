@@ -17,7 +17,7 @@ import { screenTable } from "./screenTable";
 import { cityTable } from "./cityTable";
 import { districtTable } from "./districtTable";
 import { communeTable } from "./communeTable";
-import { productDetailsTable } from "./more/productDetailTable";
+import { productDetailsTable } from "./productDetailTable";
   
   export const productTable = mysqlTable("Product", {
     ID: int().primaryKey().autoincrement(),
@@ -52,16 +52,9 @@ import { productDetailsTable } from "./more/productDetailTable";
     CreatedDate: datetime().notNull(),
     IsActive: boolean().notNull(),
 
-    Image: varchar({ length: 255 }).notNull(),
-    Image2: varchar({ length: 255 }),
-    Image3: varchar({ length: 255 }),
-    Image4: varchar({ length: 255 }),
-    Image5: varchar({ length: 255 }),
-    Image6: varchar({ length: 255 }),
-    Image7: varchar({ length: 255 }),
-    Image8: varchar({ length: 255 }),
-
     ProductDetailID : int().references(() => productDetailsTable.ID),
+
+    
     
   });
   

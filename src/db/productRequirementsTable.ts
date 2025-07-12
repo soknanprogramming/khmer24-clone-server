@@ -1,8 +1,8 @@
 import { mysqlTable, int, boolean} from "drizzle-orm/mysql-core";
-import { productSubCategoryTable } from "../productSubCategoryTable";
+import { productSubCategoryTable } from "./productSubCategoryTable";
 export const productRequirementsTable = mysqlTable("product_requirements", {
   ID: int().autoincrement().primaryKey(),
-  productSubCategoryID: int().references(() => productSubCategoryTable.ID),
+  productSubCategoryID: int().references(() => productSubCategoryTable.ID).unique(),
   ProductName: boolean().notNull().default(true),
   ProductBrand: boolean().notNull().default(true),
   TaxType: boolean().notNull(),
@@ -28,15 +28,6 @@ export const productRequirementsTable = mysqlTable("product_requirements", {
   Longitude: boolean().notNull(),
   CreatedDate: boolean().notNull().default(true),
   IsActive: boolean().notNull().default(true),
-
-  Image: boolean().notNull().default(true),
-  Image2: boolean().notNull().default(true),
-  Image3: boolean().notNull().default(true),
-  Image4: boolean().notNull().default(true),
-  Image5: boolean().notNull().default(true),
-  Image6: boolean().notNull().default(true),
-  Image7: boolean().notNull().default(true),
-  Image8: boolean().notNull().default(true),
   
   ProductDetail: boolean().notNull().default(true),
 })

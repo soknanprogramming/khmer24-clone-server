@@ -7,6 +7,7 @@ import path from 'path';
 import passport from "passport";
 import authRoute from "./routes/auth"
 import productCategoryRouter from './routes/productCategoryRoute'
+import productRequirementRouter from './routes/productRequirementRoute'
 import userRouter from './routes/userRoute'
 import "./auth/local-strategy";
 
@@ -47,6 +48,7 @@ app.use('/uploads', express.static(path.join('src', 'uploads')))
 app.use("/api/productCategory", productCategoryRouter)
 app.use("/api/user", userRouter)
 app.use("/api/auth", authRoute)
+app.use("/api/productSellRequirement", productRequirementRouter)
 
 app.listen(process.env.PORT, () => {
   console.log(`Server is running http://localhost:${process.env.PORT}`)
