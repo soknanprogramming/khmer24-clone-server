@@ -9,6 +9,7 @@ import authRoute from "./routes/auth"
 import productCategoryRouter from './routes/productCategoryRoute'
 import productRequirementRouter from './routes/productRequirementRoute'
 import userRouter from './routes/userRoute'
+import locationRouter from './routes/locationRoute';
 import "./auth/local-strategy";
 
 const app = express()
@@ -49,6 +50,7 @@ app.use("/api/productCategory", productCategoryRouter)
 app.use("/api/user", userRouter)
 app.use("/api/auth", authRoute)
 app.use("/api/productSellRequirement", productRequirementRouter)
+app.use("/api/locations", locationRouter)
 
 app.listen(process.env.PORT, () => {
   console.log(`Server is running http://localhost:${process.env.PORT}`)

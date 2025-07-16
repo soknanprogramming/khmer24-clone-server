@@ -38,6 +38,7 @@ import { productDetailsTable } from "./productDetailTable";
   
     Price: decimal({ precision: 19, scale: 4 }).notNull(), 
     Discount: decimal({ precision: 8, scale: 2 }),
+    DiscountAsPercentage: boolean().notNull(),
     IsFreeDelivery: boolean().notNull(), 
   
     Description: varchar({ length: 255 }).notNull(),
